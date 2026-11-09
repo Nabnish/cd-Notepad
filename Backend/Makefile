@@ -10,7 +10,7 @@ build:
 	go build -o $(BINARY) ./api
 
 start:
-	./ $(BINARY)
+	./$(BINARY)
   
 restart: down up
 	

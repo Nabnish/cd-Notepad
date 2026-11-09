@@ -1,8 +1,12 @@
-module go-server
+module github.com/cd-Notepad/Backend
 
 go 1.26.5
 
-require go.mongodb.org/mongo-driver v1.17.10
+require (
+	github.com/go-chi/chi/v5 v5.5.0
+	github.com/go-chi/cors v1.2.2
+	go.mongodb.org/mongo-driver v1.17.10
+)
 
 require (
 	github.com/golang/snappy v0.0.4 // indirect
