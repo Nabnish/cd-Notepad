@@ -6,6 +6,10 @@ import(
 	"net/http"
 )
 
+type Application struct{
+		Models 
+}
+
 func Handler(w http.ResponseWriter,r *http.Request){
 	fmt.Fprintf(w,"heelow")
 }
