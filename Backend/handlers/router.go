@@ -22,9 +22,20 @@ func CreateRouter() *chi.Mux {
 		MaxAge:           300,
 	}))
 	router.Route("/api", func(router chi.Router) {
+
 		router.Route("/v1", func(router chi.Router) {
 			router.Get("/health", Health)
-			router.Post("/generaterequest",createRequest)
+
+			router.Route("/request",func(router chi.Router){
+				router.Post("/generate",createRequest)
+				router.Get("/display/all",GetAllRequest)
+				router.Get("display/{id}",GetRequestID)
+				router.Delete("/{id}",DeleteRequest)
+				
+
+
+			})
+
 		})
 	})
 
