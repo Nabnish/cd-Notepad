@@ -22,7 +22,7 @@ func DisplayAllServerNodes(w http.ResponseWriter, r *http.Request){
 
 }
 
-func DisplayRequestCount(w http.ResponseWriter, r *http.Request){
+func DisplayRequestCountLB(w http.ResponseWriter, r *http.Request){
 
 }
 
@@ -31,6 +31,6 @@ func AddServerNode(w http.ResponseWriter, r *http.Request){
 }
 
 func DeleteServerNode(w http.ResponseWriter,r *http.Request){
-	
+
 }
 

@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 type LoadBalancer struct {
-	ID               int       `json:"id" bson:"_id"`
+	ID               int       `json:"id,omitempty" bson:"_id,omitempty"`
 	RequestCount     int       `json:"request_Count" bson:"request_Count"`
 	IncommingRequest []Request `json:"incomming_request" bson:"incomming_request"`
 	NoOfServNodes    int       `json:"no_of_servnodes" bson:"no_of_servnodes"`
@@ -22,7 +22,7 @@ type Request struct {
 }
 
 type Server struct {
-	ID               int       `json:"id" bason:"_id"`
+	ID               int       `json:"id,omitempty" bson:"_id,omitempty"`
 	RequestCount     int       `json:"request_Count" bson:"request_Count"`
 	IncommingRequest []Request `json:"incomming_request" bson:"incomming_request"`
 	MaxRequests      int       `json:"max_request" bson:"max_request"`
