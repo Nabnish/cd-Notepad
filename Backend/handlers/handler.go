@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"net/http"
-	"log"
 	"encoding/json"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/cors"
+	"log"
+	"net/http"
+
+	"github.com/cd-Notepad/Backend/services"
 )
 
 type Response struct {
@@ -13,30 +13,47 @@ type Response struct {
 	Code int
 }
 
-func CreateRouter() *chi.Mux {
+func Health(w http.ResponseWriter, r *http.Request) {
+	res := Response{
+		Msg:  "health",
+		Code: 200,
+	}
+	jsonResponse, err := json.Marshal(res)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	w.Header().Set("content-type", "application/json")
+	w.Write(jsonResponse)
+}
 
-	router := chi.NewRouter()
+func createRequest(w http.ResponseWriter, r *http.Request) {
+	var req services.Request
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = req.InsertRequest(req)
+	if err != nil {
+		resp := Response{
+			Msg:  "ERROR",
+			Code: 304,
+		}
+		json.NewEncoder(w).Encode(resp)
+		return
+	}
+	res := Response{
+		Msg:  "succesfully created a request",
+		Code: 200,
+	}
 
-	router.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"https://*", "http://*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTION"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CRSF-Token"},
-		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: true,
-		MaxAge:           300,
-	}))
-	router.Get("/health", func(w http.ResponseWriter, r *http.Request){
-		res := Response{
-			Msg: "health",
-			Code: 200,
-		}
-		jsonResponse , err  := json.Marshal(res)
-		if err != nil{
-			log.Println(err)
-			return
-		}
-		w.Header().Set("content-type","application/json")
-		w.Write(jsonResponse)
-	}) 
-	return router
+	jsonResponse, err := json.Marshal(res)
+	jsonResponse_req, e := json.Marshal(req)
+	if err != nil || e != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("content-type", "application/json")
+	w.Write(jsonResponse)
+	w.Write(jsonResponse_req)
 }

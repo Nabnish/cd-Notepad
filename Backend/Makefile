@@ -1,4 +1,4 @@
-include .env
+BINARY=server.exe
 up:
 	@echo "starting... "
 	docker-compose up --build -d --remove-orphans
@@ -12,5 +12,5 @@ build:
 start:
 	./$(BINARY)
   
-restart: down up
+restart: build start
 	
