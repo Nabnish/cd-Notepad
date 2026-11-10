@@ -30,10 +30,20 @@ func CreateRouter() *chi.Mux {
 				router.Post("/generate",createRequest)
 				router.Get("/display/all",GetAllRequest)
 				router.Get("display/{id}",GetRequestID)
-				router.Delete("/{id}",DeleteRequest)
+				router.Delete("delete/{id}",DeleteRequest)
+			
+			})
+
+			router.Route("/loadbalancer",func(router chi.Router){
+				router.Post("/generate",CreateLoadBalancer)
+				router.Get("/display/all",GetAllLoadBalancer)
+				router.Get("display/{id}",GetLoadBalancerID)
+				router.Delete("delete/{id}",DeleteLoadBalancer)
+				router.Get("/display/servnodes/all",DisplayAllServerNodes)
+				router.Get("display/requestcount",DisplayRequestCount)
+				router.Put("update/servernode",AddServerNode)
+				router.Put("update/delete/servernode",DeleteServerNode)
 				
-
-
 			})
 
 		})
